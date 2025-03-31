@@ -22,7 +22,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker buildx build --load -t docker.io/local/pythonworld:${{ github.sha }} -f Dockerfile .
+        docker buildx build --load -t local/pythonworld:${{ github.sha }} -f Dockerfile .
         docker images
         docker context ls
     - name: Get socket path
@@ -36,12 +36,11 @@ jobs:
 
     - name: Run Trivy Scanner
       uses: aquasecurity/trivy-action@master
-      env:
-        DOCKER-HOST: "unix://${SOCKET}"
       with:
         scan-type: "image"
         format: "json"
         output: "pythonworld_report.json"
         ignore-unfixed: true
         vuln-type: "os,library"
-        image-ref: "docker.io/local/pythonworld:${{ github.sha }}"
+        image-ref: "local/pythonworld:${{ github.sha }}"
+        DOCKER-HOST: "unix://${SOCKET}"
