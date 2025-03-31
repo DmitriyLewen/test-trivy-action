@@ -31,11 +31,8 @@ jobs:
         socket_path=$(echo "$url" | awk -F// '{print $2}')
         echo "$socket_path"
         echo "SOCKET=$socket_path" >> $GITHUB_ENV
-        sudo cp "$socket_path" "./docker.sock"
-        ls -ahl .
-        sudo chmod a+r ./docker.sock
-        ls -ahl
-
+        sudo chmod a+r $socket_path
+        ls -la "$socket_path"
 
     - name: Run Trivy Scanner
       uses: aquasecurity/trivy-action@master
