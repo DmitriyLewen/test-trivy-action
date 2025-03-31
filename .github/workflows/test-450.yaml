@@ -22,7 +22,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker buildx build --load -t local/pythonworld:${{ github.sha }} -f Dockerfile .
+        docker buildx build --load -t index.docker.io/local/pythonworld:${{ github.sha }} -f Dockerfile .
         docker images
         docker context ls
     - name: Get socket path
@@ -40,5 +40,5 @@ jobs:
         output: "pythonworld_report.json"
         ignore-unfixed: true
         vuln-type: "os,library"
-        image-ref: "local/pythonworld:${{ github.sha }}"
+        image-ref: "index.docker.io/local/pythonworld:${{ github.sha }}"
         DOCKER-HOST: "unix://${SOCKET}"
