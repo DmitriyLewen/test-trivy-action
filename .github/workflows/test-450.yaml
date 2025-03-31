@@ -31,8 +31,8 @@ jobs:
         socket_path=$(echo "$url" | awk -F// '{print $2}')
         echo "$socket_path"
         echo "SOCKET=$socket_path" >> $GITHUB_ENV
-        DOCKER_DIR=$(dirname "$SOCKET")
-        echo "$DOCKER_DIR"
+        DOCKER_DIR=$(dirname "$socket_path")
+        echo "docker dir - $DOCKER_DIR"
         ls -la "$DOCKER_DIR"
 
 
