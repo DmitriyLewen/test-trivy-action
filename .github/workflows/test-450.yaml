@@ -31,8 +31,6 @@ jobs:
         socket_path=$(echo "$url" | awk -F// '{print $2}')
         echo "$socket_path"
         echo "SOCKET=$socket_path" >> $GITHUB_ENV
-        sudo chmod a+r $socket_path
-        ls -la "$socket_path"
 
     - name: Run Trivy Scanner
       uses: aquasecurity/trivy-action@master
@@ -43,4 +41,4 @@ jobs:
         ignore-unfixed: true
         vuln-type: "os,library"
         image-ref: "local/pythonworld:${{ github.sha }}"
-        DOCKER-HOST: "${SOCKET}"
+        DOCKER-HOST: "unix://${SOCKET}"
