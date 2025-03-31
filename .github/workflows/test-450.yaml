@@ -43,4 +43,4 @@ jobs:
         ignore-unfixed: true
         vuln-type: "os,library"
         image-ref: "local/pythonworld:${{ github.sha }}"
-        DOCKER-HOST: "unix://${SOCKET}"
+        DOCKER-HOST: "${SOCKET}"
