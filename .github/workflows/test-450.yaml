@@ -1,0 +1,43 @@
+name: test-450
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Docker
+      uses: docker/setup-docker-action@v4
+      with:
+        daemon-config: |
+          {
+          "debug": true,
+          "experimental": true,
+              "features": {
+              "containerd-snapshotter": true
+              }
+          }
+
+    - name: Build Docker image
+      run: |
+        docker buildx build --load -t docker.io/local/pythonworld:${{ github.sha }} -f Dockerfile .
+        docker images
+        docker context ls
+    - name: Get socket path
+      run: |
+        url=$(docker context inspect | jq -r .[0].Endpoints.docker.Host)
+        socket_path=$(echo "$url" | awk -F// '{print $2}')
+        echo "$socket_path"
+        echo "SOCKET=$socket_path" >> $GITHUB_ENV
+
+
+    - name: Run Trivy Scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: "image"
+        format: "json"
+        output: "pythonworld_report.json"
+        ignore-unfixed: true
+        vuln-type: "os,library"
+        image-ref: "docker.io/local/pythonworld:${{ github.sha }}"
+        DOCKER-HOST: ${SOCKET}
