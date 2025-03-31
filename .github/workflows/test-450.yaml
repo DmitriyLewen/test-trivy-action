@@ -32,6 +32,7 @@ jobs:
         echo "$socket_path"
         echo "SOCKET=$socket_path" >> $GITHUB_ENV
         DOCKER_DIR=$(dirname "$SOCKET")
+        echo "$DOCKER_DIR"
         ls -la "$DOCKER_DIR"
 
 
