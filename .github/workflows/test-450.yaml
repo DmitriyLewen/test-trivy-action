@@ -31,6 +31,8 @@ jobs:
         socket_path=$(echo "$url" | awk -F// '{print $2}')
         echo "$socket_path"
         echo "SOCKET=$socket_path" >> $GITHUB_ENV
+        DOCKER_DIR=$(dirname "$SOCKET")
+        ls -la "$DOCKER_DIR"
 
 
     - name: Run Trivy Scanner
