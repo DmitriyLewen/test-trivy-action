@@ -36,6 +36,8 @@ jobs:
 
     - name: Run Trivy Scanner
       uses: aquasecurity/trivy-action@master
+      env:
+        DOCKER-HOST: "unix://${SOCKET}"
       with:
         scan-type: "image"
         format: "json"
@@ -43,4 +45,3 @@ jobs:
         ignore-unfixed: true
         vuln-type: "os,library"
         image-ref: "docker.io/local/pythonworld:${{ github.sha }}"
-        DOCKER-HOST: "./docker.sock"
