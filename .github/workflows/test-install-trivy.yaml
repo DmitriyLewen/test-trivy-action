@@ -20,7 +20,7 @@ jobs:
         uses: dnwe/setup-trivy@b557cafadcebc1d7433d78929173b5271ee9f3c9
         with:
           version: v0.60.0
-          github-server-url: 'http://github.com'
+          github-server-url: 'wrong'
 
       - name: Test trivy run
         shell: bash
