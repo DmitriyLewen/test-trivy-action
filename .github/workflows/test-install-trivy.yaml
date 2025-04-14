@@ -28,6 +28,7 @@ jobs:
           scan-type: 'fs'
           scan-ref: '.'
           skip-setup-trivy: true
+          exit-code: '1'
           version: v0.61.0
           cache: true
           cache-dir: .cache/trivy
