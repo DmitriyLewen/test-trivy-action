@@ -30,6 +30,3 @@ jobs:
           version: v0.61.0
           cache: true
           cache-dir: .cache/trivy
-        env:
-          TRIVY_SKIP_DB_UPDATE: true
-          TRIVY_SKIP_JAVA_DB_UPDATE: true
