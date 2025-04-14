@@ -17,13 +17,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install trivy
-        uses: aquasecurity/setup-trivy@v0.2.3
+        uses: DmitriyLewen/setup-trivy@87e60ac98fd66643928b2b0024af10a36e6524ff
         with:
           cache: true
           version: v0.61.0
 
       - name: Run Trivy vulnerability scanner in fs mode
-        continue-on-error: true
         uses: aquasecurity/trivy-action@0.30.0
         with:
           scan-type: 'fs'
