@@ -19,6 +19,7 @@ jobs:
       - name: Install trivy
         uses: DmitriyLewen/setup-trivy@506cdb798d1a1c9ab2ee0b8b88cbbd7154835c4b
         with:
+          cache: true
           version: v0.61.0
 
       - name: Run Trivy vulnerability scanner in fs mode
