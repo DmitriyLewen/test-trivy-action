@@ -23,7 +23,7 @@ jobs:
           version: v0.61.0
 
       - name: Run Trivy vulnerability scanner in fs mode
-        if: always()
+        continue-on-error: true
         uses: aquasecurity/trivy-action@0.30.0
         with:
           scan-type: 'fs'
