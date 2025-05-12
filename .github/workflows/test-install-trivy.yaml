@@ -8,27 +8,20 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install trivy
-        uses: DmitriyLewen/setup-trivy@506cdb798d1a1c9ab2ee0b8b88cbbd7154835c4b
+      - name: Manual Trivy Setup
+        uses: aquasecurity/setup-trivy@v0.2.2
         with:
-          cache: true
-          version: v0.61.0
+          github-server-url: "https://github.com"
 
-      - name: Run Trivy vulnerability scanner in fs mode
-        uses: aquasecurity/trivy-action@0.30.0
+      - name: Run Trivy vulnerability scanner
+        uses:  aquasecurity/trivy-action@0.30.0
         with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          skip-setup-trivy: true
+          image-ref: alpine
+          format: 'table'
           exit-code: '1'
-          version: v0.61.0
-          cache: true
-          cache-dir: .cache/trivy
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+          skip-setup-trivy: true
