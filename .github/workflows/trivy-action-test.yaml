@@ -14,15 +14,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner in fs mode
-        uses: david-marconis/trivy-action@248e3f1ae9550400733c4410e0fdc2e264a19b5b
+        uses: aquasecurity/trivy-action@0.33.1
         with:
-          scan-type: 'fs'
-          image-ref: '.'
-
-      - name: Run Trivy vulnerability scanner in fs mode
-        uses: david-marconis/trivy-action@248e3f1ae9550400733c4410e0fdc2e264a19b5b
-        with:
-          scan-type: 'fs'
-          image-ref: '.'
-          format: sarif
+          scan-type: config
+          version: latest
 
