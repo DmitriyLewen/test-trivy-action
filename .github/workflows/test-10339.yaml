@@ -1,0 +1,27 @@
+name: Reproduce discussion-10339
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker info
+        run: docker info
+
+      - name: Pull python:3.12.13-slim
+        run: docker pull python:3.12.13-slim
+
+      - name: Save image to tar
+        run: docker save -o image.tar python:3.12.13-slim
+
+      - name: Install Trivy
+        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.69.2
+
+      - name: Scan via --input (expected to fail)
+        run: trivy image --input image.tar
+        continue-on-error: true
+
+      - name: Scan via registry (expected to succeed)
+        run: trivy image --image-src registry python:3.12.13-slim
