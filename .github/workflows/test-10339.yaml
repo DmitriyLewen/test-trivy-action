@@ -7,6 +7,11 @@ jobs:
   reproduce:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v5
+        with:
+          version: v29.3.0
+
       - name: Docker info
         run: docker info
 
@@ -22,6 +27,3 @@ jobs:
       - name: Scan via --input (expected to fail)
         run: trivy image --input image.tar
         continue-on-error: true
-
-      - name: Scan via registry (expected to succeed)
-        run: trivy image --image-src registry python:3.12.13-slim
